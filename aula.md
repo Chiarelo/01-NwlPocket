@@ -50,3 +50,6 @@ como um lego, você ira utilizar peças para criar algoritmo, ou seja, para reso
 
 ## Estrutura de repetição
 [x] Estrutura while
+
+## Condicionais
+[x] Switch
