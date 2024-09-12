@@ -47,3 +47,6 @@ como um lego, você ira utilizar peças para criar algoritmo, ou seja, para reso
 [x] Atributos e métodos
 [x] Criação e manipulação de dados
 [x] Acesso a propriedade de objetos
+
+## Estrutura de repetição
+[x] Estrutura while
