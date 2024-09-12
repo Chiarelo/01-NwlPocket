@@ -1,8 +1,24 @@
 //npm install inquirer
 const { select, input, checkbox } = require('@inquirer/prompts') //
+const fs  = require("fs").promises
 
   let mensagem = "Bem vindo ao app de metas!";
-  let metas = []
+  let metas 
+
+  const carregarMetas = async () => {
+    try {
+      const dados = await fs.readFile("metas.json", "utf-8")
+      metas = JSON.parse(dados)
+    }
+    catch(erro){
+      metas = []
+    }
+  }
+
+  const salvarMetas = async () => {
+    await fs.writeFile("metas.json", JSON.stringify(metas, null, 2))
+  }
+
 
   // Função cadastrar meta
   const cadastrarMeta = async () => {
@@ -59,6 +75,11 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
   }
 
   const metasRealizadas = async () => {
+    if(metas.length == 0){ 
+      mensagem = ("Não existem metas!"); 
+      return
+    }
+
     const realizadas  = metas.filter((meta) => {
       return meta.checked 
     })
@@ -76,6 +97,11 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
   }
 
   const metasAbertas = async () => {
+    if(metas.length === 0){
+      mensagem = "Nenhuma meta cadastrada!";
+      return;
+    }
+
     const abertas = metas.filter((meta) => {
       return !meta.checked
     })
@@ -93,6 +119,12 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
   }
 
   const deletarMetas = async () => {
+    if(metas.length === 0){
+      mensagem = "Nenhuma meta cadastrada!";
+      return;
+    }
+
+    
 
     const metasDesmarcadas = metas.map((meta) => {
       return { value: meta.value, checked: false}
@@ -133,8 +165,11 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
 
 
 const start = async ()  => {  //O comando await so funciona se tiver um async
+  await carregarMetas();
+
   while(true){
     mostrarMensagem()
+    await salvarMetas()
     //*Promessa o await espera uma promessa de que o usuario vai escolher alguma das opçoes e que elas vao ser retornados
     const opcao = await select({
       message: "Menu >",

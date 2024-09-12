@@ -65,3 +65,8 @@ como um lego, você ira utilizar peças para criar algoritmo, ou seja, para reso
 
 ## Programação assíncrona e Promisses
 [x] Uso de funções assincronas (asinc/await)
+
+## JSON 
+[x] JSON.Parse() 
+[x] Javascript object notation
+[x] Json.Stringify
