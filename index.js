@@ -26,19 +26,17 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
       choices: [...metas], // Esta fazendo a cópia do vetor para não alterarmos as metas originais
       instructions: false
     })
-
-    if(respostas.length == 0){
-      console.log("Nenhuma meta selecionada!")
-      return
-    }
-
+    
     metas.forEach((m) => {
       m.checked = false
       //deixa o checked como false antes de colocar as metas como concluidas, para conseguirmos desmarcar as metas depois
     })
-
+    
+    if(respostas.length == 0){
+      console.log("Nenhuma meta selecionada!")
+      return
+    }
   
-
     respostas.forEach((resposta) => { //para cada resposta ele busca a meta correspondente quando a meta é encontrada o valor dela recebe true
       const meta = metas.find((m) => {
         return m.value == resposta
