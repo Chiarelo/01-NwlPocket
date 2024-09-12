@@ -1,3 +1,4 @@
+//npm install inquirer
 const start = () => {}
 
   while(true){
@@ -13,4 +14,6 @@ const start = () => {}
         return
     }
   }
-start
+
+
+start()
