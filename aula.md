@@ -53,8 +53,13 @@ como um lego, você ira utilizar peças para criar algoritmo, ou seja, para reso
 
 ## Condicionais
 [x] Switch
+[x] If/Else
+[x] Operadores de comparação (==, !=, >, <)
 
 ## Modulos em node.js:
 
 [x] Importação de módulos (require, CommonJs)
 [x] Biblioteca 'inquirer' para criar prompts interativos
+
+## Programação assíncrona e Promisses
+[x] Uso de funções assincronas (asinc/await)
