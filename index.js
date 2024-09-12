@@ -1,6 +1,7 @@
 //npm install inquirer
 const { select, input, checkbox } = require('@inquirer/prompts') //
 
+  let mensagem = "Bem vindo ao app de metas!";
   let metas = []
 
   // Função cadastrar meta
@@ -9,7 +10,7 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
     
 
     if(meta.length == 0){ //Verifica se o usúario digitou alguma coisa
-      console.log("A meta não pode ser vazia"); 
+      mensagem = ("A meta não pode ser vazia"); 
       //Aqui escolhemos que o programa parasse, mas se eu quisesse obrigar o usúario digitar algo
       //poderia colocar na frente do return CadastrarMeta()
       return
@@ -18,9 +19,17 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
     metas.push(
       { value: meta, checked: false }
     )
+
+    mensagem = "Meta cadastrada com sucesso!"
   }
 
   const listarMetas = async () => {
+
+    if(metas.length === 0){
+      mensagem = "Nenhuma meta cadastrada!";
+      return;
+    }
+
     const respostas = await checkbox({
       message: "Use as setas para mudar de meta, o espaço para marcar ou desmarcar e o enter para finalizar esta etapa",
       choices: [...metas], // Esta fazendo a cópia do vetor para não alterarmos as metas originais
@@ -33,7 +42,7 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
     })
     
     if(respostas.length == 0){
-      console.log("Nenhuma meta selecionada!")
+      mensagem = "Nenhuma meta selecionada!";
       return
     }
   
@@ -45,7 +54,7 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
       meta.checked = true
     })
 
-    console.log("Meta(s) marcadas concluída(s)")
+    mensagem = "Meta(s) marcadas concluída(s)"
 
   }
 
@@ -55,7 +64,7 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
     })
 
     if(realizadas.length == 0){
-      console.log("não existem metas realizadas! :(")
+      mensagem = "não existem metas realizadas! :("
       return
     }
 
@@ -72,7 +81,7 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
     })
 
     if(abertas.length == 0){
-      console.log("não existem metas em andamento")
+      mensagem = "não existem metas em andamento"
       return
     }
 
@@ -96,7 +105,7 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
     })
 
     if(metasDesmarcadas.length ==  0) {
-      console.log("Nenhum item para deletar!")
+      mensagem = "Nenhum item para deletar!"
       return
     }
 
@@ -106,16 +115,26 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
       })
     })
 
-    console.log("Meta(s) deletada(s) com sucesso!")
+    mensagem = "Meta(s) deletada(s) com sucesso!"
 
   
+  }
+
+  const mostrarMensagem = () => {
+    console.clear();
+
+    if(mensagem != ""){
+      console.log(mensagem)
+      console.log("")
+      mensagem = ""
+    }
   }
 
 
 
 const start = async ()  => {  //O comando await so funciona se tiver um async
   while(true){
-    
+    mostrarMensagem()
     //*Promessa o await espera uma promessa de que o usuario vai escolher alguma das opçoes e que elas vao ser retornados
     const opcao = await select({
       message: "Menu >",
@@ -151,7 +170,6 @@ const start = async ()  => {  //O comando await so funciona se tiver um async
     switch(opcao){
       case "cadastrar":
         await cadastrarMeta(); //Funções async sempre recebem await
-        console.log(metas)
         break
       case "listar":
         await listarMetas()
