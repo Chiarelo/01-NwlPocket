@@ -39,9 +39,11 @@ como um lego, você ira utilizar peças para criar algoritmo, ou seja, para reso
 ## Operadores 
 [x]operador de atribuição de valor
 [x]operador de concatenação
+[x]spread operator [...]
 
 ## Arrays: 
 [x] uma lista que contém qualquer tipo de dado
+[x] métodos de array
 
 ## Objetos:
 [x] Atributos e métodos

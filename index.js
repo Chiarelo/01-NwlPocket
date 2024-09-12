@@ -1,7 +1,5 @@
 //npm install inquirer
 const { select, input, checkbox } = require('@inquirer/prompts') //
-const start = async ()  => {  //O comando await so funciona se tiver um async
-
 
   let metas = []
 
@@ -36,9 +34,12 @@ const start = async ()  => {  //O comando await so funciona se tiver um async
 
     metas.forEach((m) => {
       m.checked = false
+      //deixa o checked como false antes de colocar as metas como concluidas, para conseguirmos desmarcar as metas depois
     })
 
-    respostas.forEach((resposta) => {
+  
+
+    respostas.forEach((resposta) => { //para cada resposta ele busca a meta correspondente quando a meta é encontrada o valor dela recebe true
       const meta = metas.find((m) => {
         return m.value == resposta
       })
@@ -50,7 +51,26 @@ const start = async ()  => {  //O comando await so funciona se tiver um async
 
   }
 
+  const metasRealizadas = async () => {
+    const realizadas  = metas.filter((meta) => {
+      return meta.checked 
+    })
 
+    if(realizadas.length == 0){
+      console.log("não existem metas realizadas! :(")
+      return
+    }
+
+    await select ({
+      message: "Metas realizadas!",
+      choices: [...realizadas]
+    })
+    
+  }
+
+
+
+const start = async ()  => {  //O comando await so funciona se tiver um async
   while(true){
     
     //*Promessa o await espera uma promessa de que o usuario vai escolher alguma das opçoes e que elas vao ser retornados
@@ -64,6 +84,10 @@ const start = async ()  => {  //O comando await so funciona se tiver um async
         {
           name: "Listar metas",
           value: "listar"
+        },
+        {
+          name: "Realizar metas",
+          value: "realizadas"
         },
         {
           name: "Sair",
@@ -80,6 +104,9 @@ const start = async ()  => {  //O comando await so funciona se tiver um async
         break
       case "listar":
         await listarMetas()
+        break
+      case "realizadas":
+        await metasRealizadas()
         break
       case "sair":
         console.log("Até a proxima!")
