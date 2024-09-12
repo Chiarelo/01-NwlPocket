@@ -83,6 +83,34 @@ const { select, input, checkbox } = require('@inquirer/prompts') //
 
   }
 
+  const deletarMetas = async () => {
+
+    const metasDesmarcadas = metas.map((meta) => {
+      return { value: meta.value, checked: false}
+    })
+
+    const deleteItens = await checkbox({
+      message: "Use as setas para mudar de meta, o espaço para marcar ou desmarcar e o enter para finalizar esta etapa",
+      choices: [...metasDesmarcadas], // Esta fazendo a cópia do vetor para não alterarmos as metas originais
+      instructions: false
+    })
+
+    if(metasDesmarcadas.length ==  0) {
+      console.log("Nenhum item para deletar!")
+      return
+    }
+
+    deleteItens.forEach((item) => {
+      metas = metas.filter((meta) => {
+        return meta.value != item
+      })
+    })
+
+    console.log("Meta(s) deletada(s) com sucesso!")
+
+  
+  }
+
 
 
 const start = async ()  => {  //O comando await so funciona se tiver um async
@@ -109,6 +137,10 @@ const start = async ()  => {  //O comando await so funciona se tiver um async
           value: "abertas"
         },
         {
+          name: "Deletar metas",
+          value: "deletar"
+        },
+        {
           name: "Sair",
           value: "sair"
         }
@@ -129,6 +161,9 @@ const start = async ()  => {  //O comando await so funciona se tiver um async
         break
       case "abertas":
         await metasAbertas()
+        break
+      case "deletar":
+        await deletarMetas()
         break
       case "sair":
         console.log("Até a proxima!")
