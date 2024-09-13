@@ -1,10 +1,14 @@
 [
   {
     "value": "Correr",
-    "checked": true
+    "checked": false
   },
   {
     "value": "Beber",
+    "checked": true
+  },
+  {
+    "value": "Sair",
     "checked": false
   }
 ]
